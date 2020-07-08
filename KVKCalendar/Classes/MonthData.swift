@@ -37,7 +37,7 @@ final class MonthData: CompareEventDateProtocol {
         return day.date?.year == date?.year && day.date?.month == date?.month
     }
     
-    func reloadEventsInDays(events: [Event]) {
+    func reloadEventsInDays(events: [CalendarEvent]) {
         let startDate = date.startOfMonth
         let endDate = date.endOfMonth?.startOfDay
         let startIdx = cachedDays.firstIndex(where: { $0.date?.day == startDate?.day && compareDate(day: $0, date: startDate) }) ?? 0
@@ -58,5 +58,5 @@ final class MonthData: CompareEventDateProtocol {
 }
 
 protocol DisplayDataSource: class {
-    func willDisplayDate(_ date: Date?, events: [Event]) -> DateStyle?    
+    func willDisplayDate(_ date: Date?, events: [CalendarEvent]) -> DateStyle?    
 }

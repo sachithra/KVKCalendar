@@ -10,7 +10,7 @@ import UIKit
 import KVKCalendar
 
 final class ViewController: UIViewController {
-    private var events = [Event]()
+    private var events = [CalendarEvent]()
     
     private var selectDate: Date = {
         let formatter = DateFormatter()
@@ -117,7 +117,7 @@ final class ViewController: UIViewController {
 }
 
 extension ViewController: CalendarDelegate {
-    func didChangeEvent(_ event: Event, start: Date?, end: Date?) {
+    func didChangeEvent(_ event: CalendarEvent, start: Date?, end: Date?) {
         var eventTemp = event
         guard let startTemp = start, let endTemp = end else { return }
         
@@ -143,7 +143,7 @@ extension ViewController: CalendarDelegate {
         calendarView.reloadData()
     }
     
-    func didSelectEvent(_ event: Event, type: CalendarType, frame: CGRect?) {
+    func didSelectEvent(_ event: CalendarEvent, type: CalendarType, frame: CGRect?) {
         print(type, event)
         switch type {
         case .day:
@@ -163,7 +163,7 @@ extension ViewController: CalendarDelegate {
 }
 
 extension ViewController: CalendarDataSource {
-    func eventsForCalendar() -> [Event] {
+    func eventsForCalendar() -> [CalendarEvent] {
         return events
     }
     
@@ -171,7 +171,7 @@ extension ViewController: CalendarDataSource {
         return Array(0...10).compactMap({ Calendar.current.date(byAdding: .day, value: $0, to: Date()) })
     }
     
-    func willDisplayDate(_ date: Date?, events: [Event]) -> DateStyle? {
+    func willDisplayDate(_ date: Date?, events: [CalendarEvent]) -> DateStyle? {
         guard dates.first(where: { $0.year == date?.year && $0.month == date?.month && $0.day == date?.day }) != nil else { return nil }
         
         return DateStyle(backgroundColor: .orange, textColor: .black, dotBackgroundColor: .red)
@@ -179,8 +179,8 @@ extension ViewController: CalendarDataSource {
 }
 
 extension ViewController {
-    func loadEvents(completion: ([Event]) -> Void) {
-        var events = [Event]()
+    func loadEvents(completion: ([CalendarEvent]) -> Void) {
+        var events = [CalendarEvent]()
         let decoder = JSONDecoder()
                 
         guard let path = Bundle.main.path(forResource: "events", ofType: "json"),
@@ -193,7 +193,7 @@ extension ViewController {
             let startTime = self.timeFormatter(date: startDate)
             let endTime = self.timeFormatter(date: endDate)
             
-            var event = Event()
+            var event = CalendarEvent()
             event.id = idx
             event.start = startDate
             event.end = endDate

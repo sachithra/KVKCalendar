@@ -72,7 +72,7 @@ final class WeekViewCalendar: UIView {
         scrollHeaderDay.setDate(date)
     }
     
-    func reloadData(events: [Event]) {
+    func reloadData(events: [CalendarEvent]) {
         data.events = events
         timelineView.create(dates: visibleDates, events: events, selectedDate: data.date)
     }
@@ -167,11 +167,11 @@ extension WeekViewCalendar: CalendarSettingProtocol {
 }
 
 extension WeekViewCalendar: TimelineDelegate {
-    func didDisplayEvents(_ events: [Event], dates: [Date?]) {
+    func didDisplayEvents(_ events: [CalendarEvent], dates: [Date?]) {
         delegate?.didDisplayCalendarEvents(events, dates: dates, type: .week)
     }
     
-    func didSelectEvent(_ event: Event, frame: CGRect?) {
+    func didSelectEvent(_ event: CalendarEvent, frame: CGRect?) {
         delegate?.didSelectCalendarEvent(event, frame: frame)
     }
     
@@ -205,7 +205,7 @@ extension WeekViewCalendar: TimelineDelegate {
         delegate?.didAddCalendarEvent(newDate)
     }
     
-    func didChangeEvent(_ event: Event, minute: Int, hour: Int, point: CGPoint) {
+    func didChangeEvent(_ event: CalendarEvent, minute: Int, hour: Int, point: CGPoint) {
         var day = event.start.day
         if let newDate = scrollHeaderDay.getDateByPointX(point.x), day != newDate.day {
             day = newDate.day

@@ -11,7 +11,7 @@ private let pointX: CGFloat = 5
 
 final class EventPageView: UIView {
     weak var delegate: EventPageDelegate?
-    let event: Event
+    let event: CalendarEvent
     private let timelineStyle: TimelineStyle
     private let color: UIColor
     
@@ -32,7 +32,7 @@ final class EventPageView: UIView {
         return image
     }()
     
-    init(event: Event, style: Style, frame: CGRect) {
+    init(event: CalendarEvent, style: Style, frame: CGRect) {
         self.event = event
         self.timelineStyle = style.timeline
         self.color = EventColor(event.color?.value ?? event.backgroundColor).value
@@ -113,5 +113,5 @@ protocol EventPageDelegate: class {
     func didStartMoveEventPage(_ eventPage: EventPageView, gesture: UILongPressGestureRecognizer)
     func didEndMoveEventPage(_ eventPage: EventPageView, gesture: UILongPressGestureRecognizer)
     func didChangeMoveEventPage(_ eventPage: EventPageView, gesture: UILongPressGestureRecognizer)
-    func didSelectEvent(_ event: Event, gesture: UITapGestureRecognizer)
+    func didSelectEvent(_ event: CalendarEvent, gesture: UITapGestureRecognizer)
 }

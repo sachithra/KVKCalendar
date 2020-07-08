@@ -11,11 +11,11 @@ private let countInCell: CGFloat = 4
 private let offset: CGFloat = 3
 
 protocol MonthCellDelegate: class {
-    func didSelectEvent(_ event: Event, frame: CGRect?)
+    func didSelectEvent(_ event: CalendarEvent, frame: CGRect?)
     func didSelectMore(_ date: Date, frame: CGRect?)
-    func didStartMoveEventPage(_ event: Event, snapshot: UIView?, gesture: UILongPressGestureRecognizer)
-    func didEndMoveEventPage(_ event: Event, gesture: UILongPressGestureRecognizer)
-    func didChangeMoveEventPage(_ event: Event, gesture: UILongPressGestureRecognizer)
+    func didStartMoveEventPage(_ event: CalendarEvent, snapshot: UIView?, gesture: UILongPressGestureRecognizer)
+    func didEndMoveEventPage(_ event: CalendarEvent, gesture: UILongPressGestureRecognizer)
+    func didChangeMoveEventPage(_ event: CalendarEvent, gesture: UILongPressGestureRecognizer)
 }
 
 final class MonthCollectionViewCell: UICollectionViewCell {
@@ -48,7 +48,7 @@ final class MonthCollectionViewCell: UICollectionViewCell {
     }
     weak var delegate: MonthCellDelegate?
     
-    var events: [Event] = [] {
+    var events: [CalendarEvent] = [] {
         didSet {
             subviews.filter({ $0.tag != -1 }).forEach({ $0.removeFromSuperview() })
             guard bounds.height > dateLabel.bounds.height + 10 else { return }
@@ -264,7 +264,7 @@ final class MonthCollectionViewCell: UICollectionViewCell {
         label.clipsToBounds = true
     }
 
-    private func addIconBeforeLabel(eventList: [Event], textAttributes: [NSAttributedString.Key: Any], bulletAttributes: [NSAttributedString.Key: Any], timeAttributes: [NSAttributedString.Key: Any], bullet: String = "\u{2022}", indentation: CGFloat = 10, lineSpacing: CGFloat = 2, paragraphSpacing: CGFloat = 10) -> NSAttributedString {
+    private func addIconBeforeLabel(eventList: [CalendarEvent], textAttributes: [NSAttributedString.Key: Any], bulletAttributes: [NSAttributedString.Key: Any], timeAttributes: [NSAttributedString.Key: Any], bullet: String = "\u{2022}", indentation: CGFloat = 10, lineSpacing: CGFloat = 2, paragraphSpacing: CGFloat = 10) -> NSAttributedString {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = UIDevice.current.userInterfaceIdiom == .pad ? .left : .center
         paragraphStyle.tabStops = [NSTextTab(textAlignment: .left, location: indentation, options: [:])]

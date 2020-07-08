@@ -20,7 +20,7 @@ public final class CalendarView: UIView {
     private var weekData: WeekData
     private let monthData: MonthData
     private var dayData: DayData
-    private var events: [Event] {
+    private var events: [CalendarEvent] {
         return dataSource?.eventsForCalendar() ?? []
     }
     
@@ -145,13 +145,13 @@ public final class CalendarView: UIView {
 }
 
 extension CalendarView: DisplayDataSource {
-    func willDisplayDate(_ date: Date?, events: [Event]) -> DateStyle? {
+    func willDisplayDate(_ date: Date?, events: [CalendarEvent]) -> DateStyle? {
         return dataSource?.willDisplayDate(date, events: events)
     }
 }
 
 extension CalendarView: CalendarPrivateDelegate {
-    func didDisplayCalendarEvents(_ events: [Event], dates: [Date?], type: CalendarType) {
+    func didDisplayCalendarEvents(_ events: [CalendarEvent], dates: [Date?], type: CalendarType) {
         guard self.type == type else { return }
         
         delegate?.didDisplayEvents(events, dates: dates)
@@ -161,7 +161,7 @@ extension CalendarView: CalendarPrivateDelegate {
         delegate?.didSelectDate(date, type: type, frame: frame)
     }
     
-    func didSelectCalendarEvent(_ event: Event, frame: CGRect?) {
+    func didSelectCalendarEvent(_ event: CalendarEvent, frame: CGRect?) {
         delegate?.didSelectEvent(event, type: type, frame: frame)
     }
     
@@ -173,7 +173,7 @@ extension CalendarView: CalendarPrivateDelegate {
         delegate?.didAddEvent(date)
     }
     
-    func didChangeCalendarEvent(_ event: Event, start: Date?, end: Date?) {
+    func didChangeCalendarEvent(_ event: CalendarEvent, start: Date?, end: Date?) {
         delegate?.didChangeEvent(event, start: start, end: end)
     }
     

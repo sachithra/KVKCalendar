@@ -136,7 +136,7 @@ struct Month {
 struct Day {
     let type: DayType
     let date: Date?
-    var events: [Event]
+    var events: [CalendarEvent]
     
     static func empty() -> Day {
         return self.init()
@@ -148,7 +148,7 @@ struct Day {
         self.type = .empty
     }
     
-    init(type: DayType, date: Date?, data: [Event]) {
+    init(type: DayType, date: Date?, data: [CalendarEvent]) {
         self.type = type
         self.events = data
         self.date = date

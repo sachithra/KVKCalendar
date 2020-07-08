@@ -30,14 +30,14 @@ final class AllDayTitleView: UIView {
 }
 
 protocol AllDayEventDelegate: AnyObject {
-    func didSelectAllDayEvent(_ event: Event, frame: CGRect?)
+    func didSelectAllDayEvent(_ event: CalendarEvent, frame: CGRect?)
 }
 
 final class AllDayEventView: UIView {
-    private let events: [Event]
+    private let events: [CalendarEvent]
     weak var delegate: AllDayEventDelegate?
     
-    init(events: [Event], frame: CGRect, style: AllDayStyle, date: Date?) {
+    init(events: [CalendarEvent], frame: CGRect, style: AllDayStyle, date: Date?) {
         self.events = events
         super.init(frame: frame)
         backgroundColor = style.backgroundColor
@@ -92,7 +92,7 @@ private struct AllDayEvent {
 }
 
 extension AllDayEvent: EventProtocol {
-    func compare(_ event: Event) -> Bool {
+    func compare(_ event: CalendarEvent) -> Bool {
         return "\(id)".hashValue == "\(event)".hashValue
     }
 }

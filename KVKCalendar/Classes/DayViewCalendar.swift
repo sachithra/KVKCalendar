@@ -89,7 +89,7 @@ final class DayViewCalendar: UIView {
         scrollHeaderDay.setDate(date)
     }
     
-    func reloadData(events: [Event]) {
+    func reloadData(events: [CalendarEvent]) {
         data.events = events
         timelineView.create(dates: [data.date], events: events, selectedDate: data.date)
     }
@@ -104,11 +104,11 @@ extension DayViewCalendar: ScrollDayHeaderDelegate {
 }
 
 extension DayViewCalendar: TimelineDelegate {
-    func didDisplayEvents(_ events: [Event], dates: [Date?]) {
+    func didDisplayEvents(_ events: [CalendarEvent], dates: [Date?]) {
         delegate?.didDisplayCalendarEvents(events, dates: dates, type: .day)
     }
     
-    func didSelectEvent(_ event: Event, frame: CGRect?) {
+    func didSelectEvent(_ event: CalendarEvent, frame: CGRect?) {
         delegate?.didSelectCalendarEvent(event, frame: frame)
     }
     
@@ -135,7 +135,7 @@ extension DayViewCalendar: TimelineDelegate {
         delegate?.didAddCalendarEvent(date)
     }
     
-    func didChangeEvent(_ event: Event, minute: Int, hour: Int, point: CGPoint) {
+    func didChangeEvent(_ event: CalendarEvent, minute: Int, hour: Int, point: CGPoint) {
         var startComponents = DateComponents()
         startComponents.year = event.start.year
         startComponents.month = event.start.month

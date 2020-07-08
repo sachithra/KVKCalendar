@@ -49,7 +49,7 @@ public struct EventColor {
     }
 }
 
-public struct Event {
+public struct CalendarEvent {
     public var id: Any = 0
     public var text: String = ""
     public var start: Date = Date()
@@ -73,14 +73,14 @@ public struct Event {
     public init() {}
 }
 
-extension Event: EventProtocol {
-    public func compare(_ event: Event) -> Bool {
+extension CalendarEvent: EventProtocol {
+    public func compare(_ event: CalendarEvent) -> Bool {
         return "\(id)".hashValue == "\(event.id)".hashValue
     }
 }
 
 public protocol EventProtocol {
-    func compare(_ event: Event) -> Bool
+    func compare(_ event: CalendarEvent) -> Bool
 }
 
 protocol CalendarSettingProtocol {
@@ -94,12 +94,12 @@ extension CalendarSettingProtocol {
 }
 
 protocol CalendarPrivateDelegate: class {
-    func didDisplayCalendarEvents(_ events: [Event], dates: [Date?], type: CalendarType)
+    func didDisplayCalendarEvents(_ events: [CalendarEvent], dates: [Date?], type: CalendarType)
     func didSelectCalendarDate(_ date: Date?, type: CalendarType, frame: CGRect?)
-    func didSelectCalendarEvent(_ event: Event, frame: CGRect?)
+    func didSelectCalendarEvent(_ event: CalendarEvent, frame: CGRect?)
     func didSelectCalendarMore(_ date: Date, frame: CGRect?)
     func calendarEventViewerFrame(_ frame: CGRect)
-    func didChangeCalendarEvent(_ event: Event, start: Date?, end: Date?)
+    func didChangeCalendarEvent(_ event: CalendarEvent, start: Date?, end: Date?)
     func didAddCalendarEvent(_ date: Date?)
 }
 
@@ -108,32 +108,32 @@ extension CalendarPrivateDelegate {
 }
 
 public protocol CalendarDataSource: class {
-    func eventsForCalendar() -> [Event]
-    func willDisplayDate(_ date: Date?, events: [Event]) -> DateStyle?
+    func eventsForCalendar() -> [CalendarEvent]
+    func willDisplayDate(_ date: Date?, events: [CalendarEvent]) -> DateStyle?
 }
 
 extension CalendarDataSource {
-    func willDisplayDate(_ date: Date?, events: [Event]) -> DateStyle? { return nil }
+    func willDisplayDate(_ date: Date?, events: [CalendarEvent]) -> DateStyle? { return nil }
 }
 
 public protocol CalendarDelegate: AnyObject {
     func didSelectDate(_ date: Date?, type: CalendarType, frame: CGRect?)
-    func didSelectEvent(_ event: Event, type: CalendarType, frame: CGRect?)
+    func didSelectEvent(_ event: CalendarEvent, type: CalendarType, frame: CGRect?)
     func didSelectMore(_ date: Date, frame: CGRect?)
     func eventViewerFrame(_ frame: CGRect)
-    func didChangeEvent(_ event: Event, start: Date?, end: Date?)
+    func didChangeEvent(_ event: CalendarEvent, start: Date?, end: Date?)
     func didAddEvent(_ date: Date?)
-    func didDisplayEvents(_ events: [Event], dates: [Date?])
+    func didDisplayEvents(_ events: [CalendarEvent], dates: [Date?])
 }
 
 public extension CalendarDelegate {
     func didSelectDate(_ date: Date?, type: CalendarType, frame: CGRect?) {}
-    func didSelectEvent(_ event: Event, type: CalendarType, frame: CGRect?) {}
+    func didSelectEvent(_ event: CalendarEvent, type: CalendarType, frame: CGRect?) {}
     func didSelectMore(_ date: Date, frame: CGRect?) {}
     func eventViewerFrame(_ frame: CGRect) {}
-    func didChangeEvent(_ event: Event, start: Date?, end: Date?) {}
+    func didChangeEvent(_ event: CalendarEvent, start: Date?, end: Date?) {}
     func didAddEvent(_ date: Date?) {}
-    func didDisplayEvents(_ events: [Event], dates: [Date?]) {}
+    func didDisplayEvents(_ events: [CalendarEvent], dates: [Date?]) {}
 }
 
 public struct DateStyle {

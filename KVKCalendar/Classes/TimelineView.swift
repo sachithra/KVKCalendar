@@ -19,7 +19,7 @@ final class TimelineView: UIView, CompareEventDateProtocol {
     private var style: Style
     private let hours: [String]
     private let timeHourSystem: TimeHourSystem
-    private var allEvents = [Event]()
+    private var allEvents = [CalendarEvent]()
     private var timer: Timer?
     private var eventPreview: EventPageView?
     private var dates = [Date?]()
@@ -222,7 +222,7 @@ final class TimelineView: UIView, CompareEventDateProtocol {
         return line
     }
     
-    private func calculateCrossEvents(_ events: [Event]) -> [TimeInterval: CrossEvent] {
+    private func calculateCrossEvents(_ events: [CalendarEvent]) -> [TimeInterval: CrossEvent] {
         var eventsTemp = events
         var crossEvents = [TimeInterval: CrossEvent]()
         
@@ -248,7 +248,7 @@ final class TimelineView: UIView, CompareEventDateProtocol {
         return crossEvents
     }
     
-    private func createAllDayEvents(events: [Event], date: Date?, width: CGFloat, originX: CGFloat) {
+    private func createAllDayEvents(events: [CalendarEvent], date: Date?, width: CGFloat, originX: CGFloat) {
         guard !events.isEmpty else { return }
         let pointY = style.allDay.isPinned ? 0 : -style.allDay.height
         let allDay = AllDayEventView(events: events,
@@ -416,7 +416,7 @@ final class TimelineView: UIView, CompareEventDateProtocol {
         return view
     }
     
-    func create(dates: [Date?], events: [Event], selectedDate: Date?) {
+    func create(dates: [Date?], events: [CalendarEvent], selectedDate: Date?) {
         delegate?.didDisplayEvents(events, dates: dates)
         self.dates = dates
         self.selectedDate = selectedDate
@@ -537,7 +537,7 @@ final class TimelineView: UIView, CompareEventDateProtocol {
 }
 
 extension TimelineView: EventPageDelegate {
-    func didSelectEvent(_ event: Event, gesture: UITapGestureRecognizer) {
+    func didSelectEvent(_ event: CalendarEvent, gesture: UITapGestureRecognizer) {
         delegate?.didSelectEvent(event, frame: gesture.view?.frame)
     }
     
@@ -661,7 +661,7 @@ extension TimelineView: CalendarSettingProtocol {
 }
 
 extension TimelineView: AllDayEventDelegate {
-    func didSelectAllDayEvent(_ event: Event, frame: CGRect?) {
+    func didSelectAllDayEvent(_ event: CalendarEvent, frame: CGRect?) {
         delegate?.didSelectEvent(event, frame: frame)
     }
 }

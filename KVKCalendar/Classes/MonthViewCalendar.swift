@@ -54,7 +54,7 @@ final class MonthViewCalendar: UIView {
         collectionView.reloadData()
     }
     
-    func reloadData(events: [Event]) {
+    func reloadData(events: [CalendarEvent]) {
         data.reloadEventsInDays(events: events)
         collectionView.reloadData()
     }
@@ -99,7 +99,7 @@ final class MonthViewCalendar: UIView {
 }
 
 extension MonthViewCalendar: MonthCellDelegate {
-    func didSelectEvent(_ event: Event, frame: CGRect?) {
+    func didSelectEvent(_ event: CalendarEvent, frame: CGRect?) {
         delegate?.didSelectCalendarEvent(event, frame: frame)
     }
     
@@ -107,7 +107,7 @@ extension MonthViewCalendar: MonthCellDelegate {
         delegate?.didSelectCalendarMore(date, frame: frame)
     }
     
-    func didStartMoveEventPage(_ event: Event, snapshot: UIView?, gesture: UILongPressGestureRecognizer) {
+    func didStartMoveEventPage(_ event: CalendarEvent, snapshot: UIView?, gesture: UILongPressGestureRecognizer) {
         let point = gesture.location(in: collectionView)
         
         eventPreview = nil
@@ -126,7 +126,7 @@ extension MonthViewCalendar: MonthCellDelegate {
         }
     }
     
-    func didEndMoveEventPage(_ event: Event, gesture: UILongPressGestureRecognizer) {
+    func didEndMoveEventPage(_ event: CalendarEvent, gesture: UILongPressGestureRecognizer) {
         eventPreview?.removeFromSuperview()
         eventPreview = nil
         
@@ -157,7 +157,7 @@ extension MonthViewCalendar: MonthCellDelegate {
         didSelectDate(newDate, indexPath: indexPath)
     }
     
-    func didChangeMoveEventPage(_ event: Event, gesture: UILongPressGestureRecognizer) {
+    func didChangeMoveEventPage(_ event: CalendarEvent, gesture: UILongPressGestureRecognizer) {
         let point = gesture.location(in: collectionView)
         guard collectionView.frame.width >= (point.x + 20), (point.x - 20) >= 0 else { return }
         

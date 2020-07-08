@@ -11,7 +11,7 @@ struct WeekData {
     let days: [Day]
     var date: Date
     var timeSystem: TimeHourSystem
-    var events: [Event] = []
+    var events: [CalendarEvent] = []
     
     init(yearData: YearData, timeSystem: TimeHourSystem, startDay: StartDayType) {
         self.date = yearData.date
